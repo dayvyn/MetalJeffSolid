@@ -58,7 +58,8 @@ public class LineOfSight : MonoBehaviour
                 }
             }
         }
-        else if (playerTarget.gameObject.GetComponent<Rigidbody>().velocity.x > 0.3f && seeable && !playerCrouched|| playerTarget.gameObject.GetComponent<Rigidbody>().velocity.z > 0.3f && seeable && !playerCrouched)
+        else if (playerTarget.gameObject.GetComponent<Rigidbody>().velocity.x > 0.3f && seeable && !playerCrouched && Vector3.Distance(playerTarget.transform.position, transform.position) < 15 
+            || playerTarget.gameObject.GetComponent<Rigidbody>().velocity.z > 0.3f && seeable && !playerCrouched && Vector3.Distance(playerTarget.transform.position, transform.position) < 15)
         {
             if (state == GuardState.PATROL)
             state = GuardState.INVESTIGATE;
@@ -75,6 +76,7 @@ public class LineOfSight : MonoBehaviour
             chaseTimer += Time.deltaTime;
             if (chaseTimer > 1f)
             {
+                state = GuardState.NONE;
                 state = GuardState.INVESTIGATE;
             }
         }
